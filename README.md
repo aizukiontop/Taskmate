@@ -1,92 +1,124 @@
-TaskMate
+# TaskMate
 
 A simple task management app that helps students and busy individuals organize their daily tasks.
 
-Live site: https://aizukiontop.github.io/taskmate/ API: https://your-api.onrender.com/healthz Demo video: (link coming soon)
+**Live site:** https://aizukiontop.github.io/taskmate/
+**Demo video:** (link coming soon)
 
-This deployment is running in demo mode. The interface is real; the backend is simulated in your browser so the site works without a server. Delete this notice once your API is live.
+![A screenshot of the main screen](docs/assets/screenshot.png)
 
-What it does
-Add a task with a title
-Mark tasks as complete or incomplete
-Edit a task title inline
-Delete a task
-Filter tasks by All, Active, or Completed
-Tasks are saved to a PostgreSQL database (or localStorage in demo mode)
-Built with
+## What it does
 
-React, TypeScript, and Vite on the front end. Express and PostgreSQL on the back end.
+- Add a task with a title
+- Mark tasks as complete or incomplete
+- Edit a task title inline
+- Delete a task
+- Filter tasks by All, Active, or Completed
+- Tasks are saved to a PostgreSQL database (or localStorage in demo mode)
 
-Running it yourself
+## Built with
 
-Demo mode — no database needed:
+React, TypeScript, and Vite on the front end. Express and PostgreSQL on the back end. The client can also run in demo mode using localStorage with no server required.
 
+## Running it yourself
+
+See [START-HERE.md](START-HERE.md) for full setup instructions.
+
+**Quick start (demo mode, no database):**
+
+```bash
 cd client
 npm install
-npm run dev        # http://localhost:5173
+npm run dev       # http://localhost:5173
+```
 
-Full stack:
+**Full stack:**
 
+```bash
 # Terminal 1 — server
-cd server
-npm install
-cp .env.example .env        # fill in DATABASE_URL
-npm run db:reset            # creates the table and adds sample tasks
-npm run dev                 # http://localhost:3000
+cd server && npm install && cp .env.example .env
+# Edit .env with your DATABASE_URL
+npm run db:reset && npm run dev
 
 # Terminal 2 — client
-cd client
-npm install
-cp .env.example .env        # set VITE_API_BASE_URL=http://localhost:3000
-npm run dev                 # http://localhost:5173
-Deploying
+cd client && npm install && cp .env.example .env
+# Set VITE_API_BASE_URL=http://localhost:3000
+npm run dev
+```
 
-Client — GitHub Pages:
+## Project structure
 
-Go to Settings > Pages > Build and deployment > Source: GitHub Actions
-Push to main — the site will build and deploy automatically
-
-The repository must be public for Pages to work on a free account.
-
-Server — Render / Railway / Fly.io:
-
-Point your host at the server/ folder, set the environment variables in its dashboard, and run server/db/schema.sql once against your hosted database.
-
-Future plans
-Add due dates so users can see what is most urgent
-Add drag-and-drop task reordering
-Add user accounts so tasks sync across devices
-Project structure
+```
 Taskmate/
-├── client/                React + TypeScript + Vite frontend
+├── client/          React + TypeScript + Vite frontend
 │   └── src/
-│       ├── api/           API layer (calls backend or falls back to localStorage)
+│       ├── api/     API layer (calls backend or falls back to localStorage)
 │       ├── components/
-│       │   ├── atoms/     Button, Input, Checkbox
-│       │   ├── molecules/ TaskCard, TaskForm
-│       │   └── organisms/ Navbar, TaskList, Footer
-│       └── pages/         Home, Tasks, About
-├── server/                Express + PostgreSQL backend
-│   └── db/                schema.sql, seed.sql, reset script
-└── docs/                  Planning documents
-Architecture
+│       └── pages/   Home, Tasks, About
+├── server/          Express API
+│   └── db/          pool, schema.sql, seed.sql, reset script
+├── docs/            Planning documents
+└── compose.yml      Docker Compose for local development
+```
+
+## API
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | /api/tasks | List all tasks |
+| POST | /api/tasks | Create a task |
+| PUT | /api/tasks/:id | Update title or completed |
+| DELETE | /api/tasks/:id | Delete a task |
+| GET | /healthz | Process health check |
+| GET | /readyz | Database health check |
+
+## Environment variables
+
+| Name | Where | What it is |
+|------|-------|------------|
+| `DATABASE_URL` | server | PostgreSQL connection string |
+| `CORS_ORIGINS` | server | Comma-separated allowed origins |
+| `NODE_ENV` | server | `production` on your host |
+| `VITE_API_BASE_URL` | client (build time) | API public URL. Leave empty for demo mode |
+
+Never commit `.env` files. See `.env.example` for placeholders.
+
+## Deploying
+
+**Client — GitHub Pages:** Enable GitHub Actions under Settings > Pages. Push to main. When your API is live, set `VITE_API_BASE_URL` under Settings > Variables and re-run the workflow.
+
+**Server — Render / Railway / Fly.io:** Point your host at the `server/` folder, set environment variables in the dashboard, and run `server/db/schema.sql` once against your database.
+
+## Future plans
+
+- Add due dates so users can see what is urgent
+- Add drag-and-drop task reordering
+- Add user accounts so tasks sync across devices
+
+## Architecture
 
 The client is a React single-page application served as static files from GitHub Pages. It calls the Express API over HTTPS. The API reads and writes to a PostgreSQL database. In demo mode, the client answers its own requests from localStorage with no server involved.
 
-What I would do next
-Add due dates to tasks so users can see what is most urgent
-Add drag-and-drop reordering so tasks can be prioritized easily
-Add user accounts so tasks sync across devices instead of staying in one browser
-Author
+## What I would do next
+
+- Add due dates to tasks so users can see what is urgent
+- Add the ability to reorder tasks by dragging
+- Add user accounts so tasks sync across devices
+
+## Author
 
 Dingal, Marion Anthony S. — CS-404, Section 6APSI
 
-This project was built with AI assistance from Claude (Anthropic). Roughly 75% of the work was done by the AI. See AI-USAGE.md for the full account.
+## AI use
 
-What I did: Wrote the full project specification and requirements, drew the hand-drawn UI sketch as the visual reference, built and edited parts of the React and TypeScript frontend, designed and added the logo, fixed TypeScript build errors, wrote parts of the CSS styling, and reviewed and tested every feature.
+![Built with AI assistance](https://img.shields.io/badge/built%20with-AI%20assistance-0b5fff)
 
-What the AI did: Generated the initial frontend scaffolding based on my specification and sketch, and built the entire Express backend, PostgreSQL schema, and project configuration files.
+This project was built with AI assistance from Claude (Anthropic). See [AI-USAGE.md](AI-USAGE.md) for the full account.
 
-Licence
+**What I did:** Wrote the full project specification and requirements, drew the hand-drawn UI sketch as the visual reference, designed and added the logo, built and edited parts of the React and TypeScript frontend, fixed TypeScript build errors, wrote parts of the CSS styling, and reviewed and tested every feature.
 
-MIT — see LICENSE.
+**What the AI did:** Generated the initial frontend scaffolding based on my specification and sketch, and built the entire Express backend, PostgreSQL schema, and project configuration files independently.
+
+## Licence
+
+MIT — see [LICENSE](LICENSE).
