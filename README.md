@@ -6,7 +6,7 @@
 
 One sentence saying what this does and who it is for.
 
-**Live site:** [https://yourusername.github.io/your-repo-name/](https://aizukiontop.github.io/taskmate/)
+**Live site:** [https://aizukiontop.github.io/taskmate/](https://aizukiontop.github.io/taskmate/)
 **API:** https://your-api.onrender.com/healthz
 **Demo video:** (link)
 
