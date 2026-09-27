@@ -7,7 +7,7 @@ export default function Navbar() {
       <div className="navbar__inner">
         <NavLink to="/" className="navbar__brand" aria-label="TaskMate home">
           <img
-            src="/taskmate-logo.png"
+            src="/Taskmate/taskmate-logo.png"
             alt="TaskMate"
             className="navbar__logo"
           />
