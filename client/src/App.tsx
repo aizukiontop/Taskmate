@@ -25,11 +25,14 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<Home tasks={tasks} />} />
+
         <Route path="/home" element={<Navigate to="/" replace />} />
+
         <Route
           path="/tasks"
           element={<Tasks tasks={tasks} setTasks={setTasks} />}
         />
+
         <Route path="/about" element={<About />} />
       </Routes>
 
