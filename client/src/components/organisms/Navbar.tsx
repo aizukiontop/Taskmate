@@ -6,11 +6,11 @@ export default function Navbar() {
     <header className="navbar">
       <div className="navbar__inner">
         <NavLink to="/" className="navbar__brand" aria-label="TaskMate home">
-        <img
-          src={`${import.meta.env.BASE_URL}taskmate-logo.png`}
-          alt="TaskMate"
-          className="navbar__logo"
-        />
+          <img
+            src={`${import.meta.env.BASE_URL}taskmate-logo.png`}
+            alt="TaskMate"
+            className="navbar__logo"
+          />
           <span className="navbar__name">TaskMate</span>
         </NavLink>
 
@@ -21,35 +21,27 @@ export default function Navbar() {
                 to="/"
                 end
                 className={({ isActive }) =>
-                  isActive
-                    ? 'navbar__link navbar__link--active'
-                    : 'navbar__link'
+                  isActive ? 'navbar__link navbar__link--active' : 'navbar__link'
                 }
               >
                 Home
               </NavLink>
             </li>
-
             <li>
               <NavLink
                 to="/tasks"
                 className={({ isActive }) =>
-                  isActive
-                    ? 'navbar__link navbar__link--active'
-                    : 'navbar__link'
+                  isActive ? 'navbar__link navbar__link--active' : 'navbar__link'
                 }
               >
                 Tasks
               </NavLink>
             </li>
-
             <li>
               <NavLink
                 to="/about"
                 className={({ isActive }) =>
-                  isActive
-                    ? 'navbar__link navbar__link--active'
-                    : 'navbar__link'
+                  isActive ? 'navbar__link navbar__link--active' : 'navbar__link'
                 }
               >
                 About
