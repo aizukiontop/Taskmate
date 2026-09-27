@@ -6,12 +6,11 @@ export default function Navbar() {
     <header className="navbar">
       <div className="navbar__inner">
         <NavLink to="/" className="navbar__brand" aria-label="TaskMate home">
-          <img
-            src="/Taskmate/taskmate-logo.png"
-            alt="TaskMate"
-            className="navbar__logo"
-          />
-
+        <img
+          src={`${import.meta.env.BASE_URL}taskmate-logo.png`}
+          alt="TaskMate"
+          className="navbar__logo"
+        />
           <span className="navbar__name">TaskMate</span>
         </NavLink>
 

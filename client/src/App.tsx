@@ -10,31 +10,31 @@ import About from './pages/About';
 
 export default function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchTasks()
       .then(setTasks)
-      .finally(() => setLoading(false));
+      .catch((error) => {
+        console.error('Failed to load tasks:', error);
+      });
   }, []);
 
-  if (loading) {
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center', padding: '64px', color: 'var(--color-text-muted)' }}>
-        Loading…
-      </div>
-    );
-  }
+  const basename = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   return (
-    <BrowserRouter basename="/Taskmate">
+    <BrowserRouter basename={basename}>
       <Navbar />
+
       <Routes>
         <Route path="/" element={<Home tasks={tasks} />} />
         <Route path="/home" element={<Navigate to="/" replace />} />
-        <Route path="/tasks" element={<Tasks tasks={tasks} setTasks={setTasks} />} />
+        <Route
+          path="/tasks"
+          element={<Tasks tasks={tasks} setTasks={setTasks} />}
+        />
         <Route path="/about" element={<About />} />
       </Routes>
+
       <Footer />
     </BrowserRouter>
   );
