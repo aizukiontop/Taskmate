@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import type { Task } from './types/Task';
 import { fetchTasks } from './api/tasks';
 import Navbar from './components/organisms/Navbar';
@@ -19,10 +19,8 @@ export default function App() {
       });
   }, []);
 
-  const basename = import.meta.env.BASE_URL.replace(/\/$/, '');
-
   return (
-    <BrowserRouter basename={basename}>
+    <HashRouter>
       <Navbar />
 
       <Routes>
@@ -36,6 +34,6 @@ export default function App() {
       </Routes>
 
       <Footer />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
