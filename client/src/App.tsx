@@ -12,7 +12,6 @@ export default function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Load tasks on first render (from API or localStorage fallback)
   useEffect(() => {
     fetchTasks()
       .then(setTasks)
@@ -28,7 +27,7 @@ export default function App() {
   }
 
   return (
-    <BrowserRouter basename="/Taskmate/">
+    <BrowserRouter basename="/Taskmate">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home tasks={tasks} />} />
