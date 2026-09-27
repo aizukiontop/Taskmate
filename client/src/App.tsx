@@ -27,7 +27,7 @@ export default function App() {
   }
 
   return (
-    <BrowserRouter basename="/Taskmate">
+    <BrowserRouter basename="/">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home tasks={tasks} />} />
