@@ -14,7 +14,6 @@ const allowedOrigins = (process.env.CORS_ORIGINS || 'http://localhost:5173').spl
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (e.g. curl, same-origin)
     if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
     callback(new Error('Not allowed by CORS'));
   },
@@ -37,13 +36,27 @@ app.get('/readyz', async (_req, res) => {
   }
 });
 
+// ── Auth ─────────────────────────────────────────────────────────────────────
+
+// POST /api/login — simple username-only login
+app.post('/api/login', async (req, res) => {
+  const { username } = req.body;
+  if (!username || typeof username !== 'string' || username.trim() === '') {
+    return res.status(400).json({ error: 'username is required' });
+  }
+  res.json({ username: username.trim() });
+});
+
 // ── Tasks API ────────────────────────────────────────────────────────────────
 
-// GET /api/tasks — return all tasks, newest first
-app.get('/api/tasks', async (_req, res) => {
+// GET /api/tasks?username=marion — return tasks for a user
+app.get('/api/tasks', async (req, res) => {
+  const { username } = req.query;
+  if (!username) return res.status(400).json({ error: 'username is required' });
   try {
     const result = await pool.query(
-      'SELECT id, title, completed FROM tasks ORDER BY id ASC'
+      'SELECT id, title, completed, username FROM tasks WHERE username = $1 ORDER BY id ASC',
+      [username]
     );
     res.json(result.rows);
   } catch (err) {
@@ -54,14 +67,17 @@ app.get('/api/tasks', async (_req, res) => {
 
 // POST /api/tasks — create a new task
 app.post('/api/tasks', async (req, res) => {
-  const { title } = req.body;
+  const { title, username } = req.body;
   if (!title || typeof title !== 'string' || title.trim() === '') {
     return res.status(400).json({ error: 'title is required' });
   }
+  if (!username || typeof username !== 'string' || username.trim() === '') {
+    return res.status(400).json({ error: 'username is required' });
+  }
   try {
     const result = await pool.query(
-      'INSERT INTO tasks (title, completed) VALUES ($1, $2) RETURNING id, title, completed',
-      [title.trim(), false]
+      'INSERT INTO tasks (title, completed, username) VALUES ($1, $2, $3) RETURNING id, title, completed, username',
+      [title.trim(), false, username.trim()]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -76,8 +92,6 @@ app.put('/api/tasks/:id', async (req, res) => {
   if (isNaN(id)) return res.status(400).json({ error: 'Invalid id' });
 
   const { title, completed } = req.body;
-
-  // Build update dynamically — only set what was sent
   const fields = [];
   const values = [];
   let idx = 1;
@@ -106,7 +120,7 @@ app.put('/api/tasks/:id', async (req, res) => {
 
   try {
     const result = await pool.query(
-      `UPDATE tasks SET ${fields.join(', ')} WHERE id = $${idx} RETURNING id, title, completed`,
+      `UPDATE tasks SET ${fields.join(', ')} WHERE id = $${idx} RETURNING id, title, completed, username`,
       values
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Task not found' });
