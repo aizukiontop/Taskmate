@@ -10,18 +10,17 @@ type FilterType = 'all' | 'active' | 'completed';
 type TasksProps = {
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  username: string;
 };
 
-export default function Tasks({ tasks, setTasks }: TasksProps) {
+export default function Tasks({ tasks, setTasks, username }: TasksProps) {
   const [filter, setFilter] = useState<FilterType>('all');
 
-  // --- ADD TASK ---
   async function handleAdd(title: string) {
-    const newTask = await createTask(title);
+    const newTask = await createTask(title, username);
     setTasks(prev => [...prev, newTask]);
   }
 
-  // --- TOGGLE COMPLETE / UNCOMPLETE ---
   async function handleToggle(id: number) {
     const task = tasks.find(t => t.id === id);
     if (!task) return;
@@ -29,13 +28,11 @@ export default function Tasks({ tasks, setTasks }: TasksProps) {
     setTasks(prev => prev.map(t => t.id === id ? updated : t));
   }
 
-  // --- EDIT TASK TITLE ---
   async function handleEdit(id: number, newTitle: string) {
     const updated = await updateTask(id, { title: newTitle });
     setTasks(prev => prev.map(t => t.id === id ? updated : t));
   }
 
-  // --- DELETE TASK ---
   async function handleDelete(id: number) {
     await deleteTask(id);
     setTasks(prev => prev.filter(t => t.id !== id));

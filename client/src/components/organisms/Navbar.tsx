@@ -1,7 +1,12 @@
 import { NavLink } from 'react-router-dom';
 import './Navbar.css';
 
-export default function Navbar() {
+type NavbarProps = {
+  username: string;
+  onLogout: () => void;
+};
+
+export default function Navbar({ username, onLogout }: NavbarProps) {
   return (
     <header className="navbar">
       <div className="navbar__inner">
@@ -46,6 +51,12 @@ export default function Navbar() {
               >
                 About
               </NavLink>
+            </li>
+            <li className="navbar__user">
+              <span className="navbar__username">👤 {username}</span>
+              <button className="navbar__signout" onClick={onLogout}>
+                Sign out
+              </button>
             </li>
           </ul>
         </nav>
