@@ -5,7 +5,7 @@ A simple task management app that helps students and busy individuals organize t
 **Live site:** https://aizukiontop.github.io/Taskmate/
 **Demo video:** (link coming soon)
 
-![A screenshot of the main screen](docs/assets/screenshot.png)
+![A screenshot of the main screen](docs/mainpage.png)
 
 ## What it does
 
