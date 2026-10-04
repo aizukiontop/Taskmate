@@ -85,16 +85,25 @@ Never commit `.env` files. See `.env.example` for placeholders.
 
 ## Deploying
 
-**Client — GitHub Pages:** Enable GitHub Actions under Settings > Pages. Push to main. When your API is live, set `VITE_API_BASE_URL` under Settings > Variables and re-run the workflow.
+**Client — GitHub Pages:** Enable GitHub Actions under Settings > Pages. Push to main. Set `VITE_API_BASE_URL` under Settings > Variables so the frontend points to your live API.
 
-**Server — Render / Railway / Fly.io:** Point your host at the `server/` folder, set environment variables in the dashboard, and run `server/db/schema.sql` once against your database.
+**Server — Railway:** Connect your GitHub repo to Railway, set the root directory to `server/`, add your environment variables in the dashboard, and run `server/db/schema.sql` once against your Neon database.
 
 ## Future plans
 
-- Add due dates so users can see what is urgent
-- Add drag-and-drop task reordering
-- Add user accounts so tasks sync across devices
+- Build a proper **sign up and login page** with real password authentication using hashed passwords so accounts are secure
+- Add **user profiles** where users can set a display name, profile picture, and preferences
+- Add **due dates and priority levels** to tasks so users can see what is most urgent
+- Add **drag-and-drop reordering** so tasks can be manually prioritized
+- Add **task categories or labels** so tasks can be grouped by subject or project
+- Send **email reminders** for tasks that are due soon
+- Build a **mobile app** version using React Native so TaskMate works on phones natively
 
+## What I would do next
+
+- Add **passwords** so accounts are properly secured instead of username only
+- Add **due dates** so users can see what tasks are most urgent
+- Add **drag-and-drop reordering** so tasks can be prioritized easily
 ## Architecture
 
 The client is a React single-page application served as static files from GitHub Pages. It calls the Express API over HTTPS. The API reads and writes to a PostgreSQL database. In demo mode, the client answers its own requests from localStorage with no server involved.
