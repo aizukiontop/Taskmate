@@ -53,7 +53,7 @@ export default function Navbar({ username, onLogout }: NavbarProps) {
               </NavLink>
             </li>
             <li className="navbar__user">
-              <span className="navbar__username">👤 {username}</span>
+              <span className="navbar__username"> {username}</span>
               <button className="navbar__signout" onClick={onLogout}>
                 Sign out
               </button>
