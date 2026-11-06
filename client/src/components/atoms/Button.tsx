@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import './Button.css';
 
 type ButtonProps = {
@@ -6,6 +7,8 @@ type ButtonProps = {
   variant?: 'primary' | 'secondary' | 'danger' | 'ghost';
   type?: 'button' | 'submit';
   ariaLabel?: string;
+  icon?: ReactNode;
+  iconOnly?: boolean;
 };
 
 export default function Button({
@@ -14,15 +17,19 @@ export default function Button({
   variant = 'primary',
   type = 'button',
   ariaLabel,
+  icon,
+  iconOnly = false,
 }: ButtonProps) {
   return (
     <button
-      className={`btn btn--${variant}`}
+      className={`btn btn--${variant}${iconOnly ? ' btn--icon-only' : ''}`}
       onClick={onClick}
       type={type}
-      aria-label={ariaLabel}
+      aria-label={ariaLabel ?? text}
+      title={iconOnly ? text : undefined}
     >
-      {text}
+      {icon}
+      {!iconOnly && text}
     </button>
   );
 }

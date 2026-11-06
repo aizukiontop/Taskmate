@@ -1,77 +1,90 @@
 .about {
   flex: 1;
-  padding: var(--space-4);
+  padding: 36px 40px;
 }
 
 .about__inner {
-  max-width: 640px;
+  max-width: 700px;
   margin: 0 auto;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  padding: var(--space-4);
-  box-shadow: var(--shadow);
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  padding: 36px 40px;
 }
 
 .about__title {
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 700;
-  color: var(--color-primary);
-  margin-bottom: var(--space-2);
+  color: var(--clr-text);
+  margin-bottom: 10px;
+  letter-spacing: -0.3px;
 }
 
 .about__intro {
-  font-size: 16px;
-  color: var(--color-text-muted);
-  margin-bottom: var(--space-3);
+  font-size: 14px;
+  color: var(--clr-text-muted);
+  margin-bottom: 26px;
   line-height: 1.6;
 }
 
 .about__section {
-  margin-bottom: var(--space-3);
+  margin-bottom: 24px;
 }
 
 .about__subheading {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 600;
-  color: var(--color-text);
-  margin-bottom: var(--space-1);
+  color: var(--clr-text);
+  margin-bottom: 8px;
 }
 
 .about__section p {
-  font-size: 16px;
-  color: var(--color-text);
-  line-height: 1.6;
+  font-size: 14px;
+  color: var(--clr-text-muted);
+  line-height: 1.7;
 }
 
 .about__list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
 
 .about__list li {
-  font-size: 16px;
-  color: var(--color-text);
-  padding-left: var(--space-2);
+  font-size: 14px;
+  color: var(--clr-text);
+  padding-left: 26px;
   position: relative;
 }
 
 .about__list li::before {
   content: '✓';
-  color: var(--color-accent);
+  color: #fff;
+  background: var(--clr-red);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
   position: absolute;
   left: 0;
-  font-weight: 700;
+  top: 1px;
 }
 
 @media (max-width: 768px) {
   .about {
-    padding: var(--space-2);
+    padding: 20px 16px;
+  }
+
+  .about__inner {
+    padding: 24px 20px;
   }
 
   .about__title {
-    font-size: 26px;
+    font-size: 22px;
   }
 }

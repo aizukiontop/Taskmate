@@ -25,7 +25,7 @@ export default function TaskForm({ onAdd }: TaskFormProps) {
 
   return (
     <section className="task-form" aria-labelledby="add-task-heading">
-      <h2 id="add-task-heading" className="task-form__heading">Add Task</h2>
+      <h2 id="add-task-heading" className="task-form__heading">Add task</h2>
       <div className="task-form__row">
         <label htmlFor="new-task-input" className="sr-only">New task title</label>
         <Input

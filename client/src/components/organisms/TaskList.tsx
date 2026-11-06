@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Task } from '../../types/Task';
 import TaskCard from '../molecules/TaskCard';
 import './TaskList.css';
@@ -21,17 +22,29 @@ export default function TaskList({
   onEdit,
   onDelete,
 }: TaskListProps) {
+  const [search, setSearch] = useState('');
+
   // Apply the filter to get only the tasks we want to show
-  const filteredTasks = tasks.filter((task) => {
-    if (filter === 'active') return !task.completed;
-    if (filter === 'completed') return task.completed;
-    return true; // 'all' shows everything
-  });
+  const filteredTasks = tasks
+    .filter((task) => {
+      if (filter === 'active') return !task.completed;
+      if (filter === 'completed') return task.completed;
+      return true; // 'all' shows everything
+    })
+    .filter((task) => task.title.toLowerCase().includes(search.trim().toLowerCase()));
 
   return (
-    <section className="task-list" aria-labelledby="task-list-heading">
+    <section className="task-list" aria-label="Task list">
       <div className="task-list__header">
-        <h2 id="task-list-heading" className="task-list__heading">Task List</h2>
+        <label htmlFor="task-search" className="sr-only">Search tasks</label>
+        <input
+          id="task-search"
+          className="task-list__search"
+          type="text"
+          placeholder="Search tasks"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
 
         <div className="task-list__filters" role="group" aria-label="Filter tasks">
           <button

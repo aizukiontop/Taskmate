@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Tasks from './pages/Tasks';
 import About from './pages/About';
 import Login from './pages/Login';
+import './layout.css';
 
 export default function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -37,7 +38,15 @@ export default function App() {
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', padding: '64px', color: 'var(--color-text-muted)' }}>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        color: 'var(--clr-text-muted)',
+        fontSize: '15px',
+        background: 'var(--clr-bg)',
+      }}>
         Loading…
       </div>
     );
@@ -47,15 +56,23 @@ export default function App() {
     return <Login onLogin={handleLogin} />;
   }
 
+  const activeTasks = tasks.filter(t => !t.completed).length;
+
   return (
     <BrowserRouter basename="/Taskmate">
-      <Navbar username={username} onLogout={handleLogout} />
-      <Routes>
-        <Route index element={<Home tasks={tasks} />} />
-        <Route path="tasks" element={<Tasks tasks={tasks} setTasks={setTasks} username={username} />} />
-        <Route path="about" element={<About />} />
-      </Routes>
-      <Footer />
+      <div className="app-layout">
+        <Navbar username={username} taskCount={activeTasks} onLogout={handleLogout} />
+        <div className="app-main">
+          <div className="app-content">
+            <Routes>
+              <Route index element={<Home tasks={tasks} username={username} />} />
+              <Route path="tasks" element={<Tasks tasks={tasks} setTasks={setTasks} username={username} />} />
+              <Route path="about" element={<About />} />
+            </Routes>
+          </div>
+          <Footer />
+        </div>
+      </div>
     </BrowserRouter>
   );
 }

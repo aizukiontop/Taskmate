@@ -25,6 +25,12 @@ export default function Login({ onLogin }: LoginProps) {
   return (
     <main className="login">
       <div className="login__card">
+        <div className="login__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        </div>
+
         <h1 className="login__title">TaskMate</h1>
         <p className="login__subtitle">Organize your tasks. Stay on track.</p>
 

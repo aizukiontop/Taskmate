@@ -38,9 +38,16 @@ export default function Tasks({ tasks, setTasks, username }: TasksProps) {
     setTasks(prev => prev.filter(t => t.id !== id));
   }
 
+  const remaining = tasks.filter(t => !t.completed).length;
+
   return (
     <main className="tasks-page">
       <div className="tasks-page__inner">
+        <div>
+          <h1 className="tasks-page__title">Tasks</h1>
+          <p className="tasks-page__subtitle">{remaining} remaining of {tasks.length}</p>
+        </div>
+
         <TaskForm onAdd={handleAdd} />
         <TaskList
           tasks={tasks}
