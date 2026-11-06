@@ -54,8 +54,6 @@ export default function Home({ tasks, username }: HomeProps) {
     month: 'long',
   });
 
-  const firstName = username.split(' ')[0];
-
   return (
     <main className="home">
       <div className="home__header">
